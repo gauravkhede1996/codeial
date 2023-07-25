@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class PostsList extends Component {
+class PostsList extends React.Component {
   render() {
     const { posts } = this.props;
     return (

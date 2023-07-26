@@ -8,8 +8,7 @@ import Navbar from './Navbar';
 import PageNotFound from './PageNotFound';
 import { fetchPosts } from '../actions/posts';
 import LogIn from './LogIn';
-
-const SignUp = () => <div>SignUp</div>
+import Signup from './Signup';
 
 class App extends React.Component {
   componentDidMount() {
@@ -31,7 +30,7 @@ class App extends React.Component {
         <Routes>
         <Route exact path="/" element={<Home posts={posts}/>} />
         <Route path="/login/*" element={<LogIn />} />
-        <Route path="/signUp" element= {<SignUp/>} />
+        <Route path="/signUp" element= {<Signup/>} />
         <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>

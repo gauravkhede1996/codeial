@@ -37,6 +37,7 @@ export function login(email,password) {
             console.log(data," DATA");
             if(data.success){
                 //save the user 
+                localStorage.setItem('user',data.user);
                 dispatch(loginSuccess(data))
                 return;
             }

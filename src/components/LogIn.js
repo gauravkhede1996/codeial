@@ -1,7 +1,6 @@
 import React from 'react';
-import { login } from '../actions/auth';
+import { clearAuthState, login } from '../actions/auth';
 import { connect } from 'react-redux';
-
 class LogIn extends React.Component {
     constructor(props) {
         super(props);
@@ -12,11 +11,13 @@ class LogIn extends React.Component {
             password: ''
         }
     }
+    componentWillUnmount() {
+        this.props.dispatch(clearAuthState());
+    }
     handleSubmitButton = (e) => {
         e.preventDefault();
         // console.log("This.emailInputRef" , this.emailInputRef);
         // console.log("This.passwordInputRef ",this.passwordInputRef);
-        console.log(this.state," is the State");
         const {email, password} = this.state;
         if( email && password ) {
         this.props.dispatch(login(email,password));
@@ -33,7 +34,10 @@ class LogIn extends React.Component {
         })
     }
     render() {
-        const {error, inProgress } = this.props.auth;
+        const {error, inProgress, isLoggedin } = this.props.auth;
+        if( isLoggedin ) {
+            
+        }
         return (
             <form className='login-form'>
                 <span className='login-signup-header'>Log In</span>

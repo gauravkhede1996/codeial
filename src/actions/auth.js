@@ -1,6 +1,6 @@
 import { APIurls } from "../helpers/urls";
 import { getFormBody } from "../helpers/utils";
-import { LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS, SIGNUP_FAILED, SIGNUP_START, SIGNUP_SUCCESS } from "./actionTypes";
+import { AUTHENTICATE_USER, CLEAR_AUTH_STATE, LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS, LOG_OUT, SIGNUP_FAILED, SIGNUP_START, SIGNUP_SUCCESS } from "./actionTypes";
 
 export function startLogin () {
     return {
@@ -37,7 +37,7 @@ export function login(email,password) {
             console.log(data," DATA");
             if(data.success){
                 //save the user 
-                localStorage.setItem('user',data.user);
+                localStorage.setItem('user',JSON.stringify(data.user));
                 dispatch(loginSuccess(data))
                 return;
             }
@@ -88,4 +88,23 @@ export function signupFailed (errorMessage) {
         type: SIGNUP_FAILED,
         message: errorMessage,
     };
+}
+
+export function authenticateUser (user) {
+    return {
+        type: AUTHENTICATE_USER,
+        user,
+    }
+}
+
+export function logoutUser() {
+    return {
+        type: LOG_OUT,
+    }
+}
+
+export function clearAuthState() {
+    return {
+        type:CLEAR_AUTH_STATE,
+    }
 }

@@ -9,10 +9,22 @@ import PageNotFound from './PageNotFound';
 import { fetchPosts } from '../actions/posts';
 import LogIn from './LogIn';
 import Signup from './Signup';
+import { authenticateUser } from '../actions/auth';
 
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log(user," is the user");
+    if ( user ) {
+      this.props.dispatch(authenticateUser({
+        email:user.email,
+        _id:user._id,
+        name: user.name,
+        password: user.password,
+      }))
+    }
+    console.log(this.props);
   }
   render() {
     console.log("PROPS", this.props);

@@ -1,8 +1,15 @@
 import React from 'react';
-
-function Navbar(props) {
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions/auth';
+class Navbar extends React.Component {
+  logout = () => {
+    localStorage.removeItem('user');
+    this.props.dispatch(logoutUser());
+  }
+  render() {
+    const { auth } = this.props;
     return (
-            <nav className='nav'>
+      <nav className='nav'>
           <div className='left-div'>
             <img alt="logo" src="https://pbs.twimg.com/media/F1tzyteaEAArS_H?format=png&name=medium" style={{height:60,width:60}}/>
           </div>
@@ -23,20 +30,34 @@ function Navbar(props) {
             </div>
           </div>
           <div className='right-nav'>
-            <div className='user'>
+            {auth.isLoggedin && (
+              <div className='user'>
               <img src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png" alt="user-dp" id="user-dp"/>
-              <span> Gaurav Khede</span>
+              <span> {auth.user.name}</span>
             </div>
+            )}
             <div className='nav-links'>
               <ul>
-                <li>Log In</li>
-                <li>Log Out</li>
-                <li>Register</li>
+                {!auth.isLoggedin && (
+                  <li>Log In</li>
+                )}
+                {auth.isLoggedin && (
+                  <li onClick={this.logout}>Log Out</li>
+                )}
+                {!auth.isLoggedin && (
+                  <li>Register</li>
+                )}
               </ul>
             </div>
           </div>
         </nav>
     );
+  }
+}
+function mapPropsToState(state) {
+  return {
+    auth: state.auth,
+  }
 }
 
-export default Navbar;
+export default connect(mapPropsToState)(Navbar);
